@@ -30,6 +30,10 @@ class User extends Auth
         'password',
         'avatar'
     ];
+    
+    protected $hidden = [
+        'password'
+    ];
 
     protected static function newFactory(): UserFactory
     {
