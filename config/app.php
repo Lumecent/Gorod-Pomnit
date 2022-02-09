@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'ru',
 
     /*
     |--------------------------------------------------------------------------
@@ -175,6 +175,11 @@ return [
         // App\Base\Providers\BroadcastServiceProvider::class,
         App\Base\Providers\EventServiceProvider::class,
         App\Base\Providers\RouteServiceProvider::class,
+
+        /*
+         * Containers Service Providers...
+         */
+        App\Containers\User\Providers\UserServiceProvider::class
     ],
 
     /*
