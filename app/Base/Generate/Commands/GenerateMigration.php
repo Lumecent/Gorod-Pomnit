@@ -71,15 +71,15 @@ class GenerateMigration extends GenerateCommand
     {
         [ $argument, $namespace ] = $params;
 
-        $className = strtolower( $this->argument( $argument ) );
-        $tableName = "{$className}s";
+        $className = $this->argument( $argument );
+        $tableName = strtolower( preg_replace( '/[A-Z][a-z]+/', '_$0', lcfirst( $this->argument( $argument ) ) ) ) . 's';
 
         if ( str_contains( $stubFileName, 'create' ) ) {
-            $fileName = lcfirst( $namespace . '\\' . Carbon::now()->format( 'Y_m_d_His' ) . "_create_{$className}s_table.php" );
+            $fileName = lcfirst( $namespace . '\\' . Carbon::now()->format( 'Y_m_d_His' ) . "_create_{$tableName}_table.php" );
             $className = 'Create' . ucfirst( $className ) . 'sTable';
         }
         else {
-            $fileName = lcfirst( $namespace . '\\' . Carbon::now()->format( 'Y_m_d_His' ) . "_update_{$className}s_table.php" );
+            $fileName = lcfirst( $namespace . '\\' . Carbon::now()->format( 'Y_m_d_His' ) . "_update_{$tableName}_table.php" );
             $className = 'Update' . ucfirst( $className ) . 'sTable';
         }
 
