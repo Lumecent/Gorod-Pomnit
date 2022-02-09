@@ -13,4 +13,9 @@ abstract class Repository
     }
 
     abstract protected static function getModelClass(): string;
+
+    public function findById( int $id ): ?Model
+    {
+        return $this->startConditions()->find( $id );
+    }
 }
