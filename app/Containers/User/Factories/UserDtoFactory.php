@@ -2,14 +2,12 @@
 
 namespace App\Containers\User\Factories;
 
-use App\Abstractions\Factories\CreateObjectFactory;
+use App\Containers\User\DTO\Auth\RegisterDto;
 
-class UserDtoFactory extends CreateObjectFactory
+class UserDtoFactory
 {
-    public function getClassAliases(): array
+    public static function getRegisterDto(): RegisterDto
     {
-        return [
-
-        ];
+        return app( RegisterDto::class );
     }
 }

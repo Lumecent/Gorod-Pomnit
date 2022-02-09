@@ -2,14 +2,12 @@
 
 namespace App\Containers\User\Factories;
 
-use App\Abstractions\Factories\CreateObjectFactory;
+use App\Containers\User\Services\Auth\RegisterService;
 
-class UserServiceFactory extends CreateObjectFactory
+class UserServiceFactory
 {
-    public function getClassAliases(): array
+    public static function getRegisterService(): RegisterService
     {
-        return [
-
-        ];
+        return app( RegisterService::class );
     }
 }
