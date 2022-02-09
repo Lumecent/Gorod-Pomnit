@@ -11,6 +11,8 @@ use Illuminate\Notifications\Notifiable;
  * @property int $id
  * @property string $first_name
  * @property string $last_name
+ * @property string $country
+ * @property string $city
  * @property string $email
  * @property string $password
  * @property string $avatar
@@ -26,11 +28,13 @@ class User extends Auth
     protected $fillable = [
         'first_name',
         'last_name',
+        'country',
+        'city',
         'email',
         'password',
         'avatar'
     ];
-    
+
     protected $hidden = [
         'password'
     ];
