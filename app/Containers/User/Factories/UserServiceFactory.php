@@ -2,12 +2,18 @@
 
 namespace App\Containers\User\Factories;
 
-use App\Containers\User\Services\Auth\RegisterService;
+use App\Containers\User\Services\ActivateAccountMessageService;
+use App\Containers\User\Services\Auth\RegistrationService;
 
 class UserServiceFactory
 {
-    public static function getRegisterService(): RegisterService
+    public static function getRegistrationService(): RegistrationService
     {
-        return app( RegisterService::class );
+        return app( RegistrationService::class );
+    }
+
+    public static function getActivateAccountMessageService(): ActivateAccountMessageService
+    {
+        return app( ActivateAccountMessageService::class );
     }
 }

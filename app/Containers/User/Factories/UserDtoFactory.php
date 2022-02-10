@@ -2,12 +2,18 @@
 
 namespace App\Containers\User\Factories;
 
-use App\Containers\User\DTO\Auth\RegisterDto;
+use App\Containers\User\DTO\ActivateAccountDto;
+use App\Containers\User\DTO\Auth\RegistrationDto;
 
 class UserDtoFactory
 {
-    public static function getRegisterDto(): RegisterDto
+    public static function getRegistrationDto(): RegistrationDto
     {
-        return app( RegisterDto::class );
+        return app( RegistrationDto::class );
+    }
+
+    public static function getActivateAccountDto(): ActivateAccountDto
+    {
+        return app( ActivateAccountDto::class );
     }
 }
