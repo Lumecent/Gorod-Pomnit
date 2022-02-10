@@ -12,6 +12,7 @@ class ApiAuthRoute extends RouteServiceProvider
     {
         ApiRoute::controller( AuthController::class )->prefix( 'api/v1/auth' )->group( function () {
             ApiRoute::post( 'registration', 'registration' );
+            ApiRoute::post( 'login', 'login' );
         } );
     }
 }
