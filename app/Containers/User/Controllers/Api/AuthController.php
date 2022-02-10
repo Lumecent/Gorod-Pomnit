@@ -35,6 +35,8 @@ class AuthController extends ApiController
                 'token' => $token->token
             ] );
             UserServiceFactory::getActivateAccountMessageService()->run( $activateDto );
+
+            $accessToken = UserServiceFactory::getAuthTokenService()->run( $user );
         } catch ( Throwable ) {
             DB::rollBack();
             return ApiResponse::sendData( 'Произошла ошибка! Повторите попытку позднее', [], 500 );
@@ -42,7 +44,10 @@ class AuthController extends ApiController
 
         DB::commit();
 
-        return ApiResponse::sendData( 'На указанный e-mail адрес было отправлено письмо для подтверждения' );
+        return ApiResponse::sendData(
+            'На указанный e-mail адрес было отправлено письмо для подтверждения',
+            [ 'user' => $user, 'access_token' => $accessToken ]
+        );
     }
 
     public function login( ApiLoginRequest $request ): ApiResponse
@@ -50,7 +55,8 @@ class AuthController extends ApiController
         $dto = UserDtoFactory::getLoginDto()->fromArray( $request->all() );
         $user = UserServiceFactory::getLoginService()->run( $dto );
         if ( $user ) {
-            return ApiResponse::sendData( '', [ 'user' => $user ] );
+            $accessToken = UserServiceFactory::getAuthTokenService()->run( $user );
+            return ApiResponse::sendData( '', [ 'user' => $user, 'access_token' => $accessToken ] );
         }
 
         return ApiResponse::sendData( '', [ 'email' => 'Неправильный e-mail адрес или пароль' ], 422 );
