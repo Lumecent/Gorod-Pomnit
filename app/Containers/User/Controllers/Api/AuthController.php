@@ -42,7 +42,7 @@ class AuthController extends ApiController
 
         DB::commit();
 
-        return ApiResponse::sendData( 'На указанный e-mail было отправлено письмо для подтверждения регистрации' );
+        return ApiResponse::sendData( 'На указанный e-mail адрес было отправлено письмо для подтверждения' );
     }
 
     public function login( ApiLoginRequest $request ): ApiResponse
