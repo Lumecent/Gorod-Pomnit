@@ -6,6 +6,7 @@ use App\Abstractions\Models\Auth;
 use App\Containers\User\Data\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 /**
  * @property int $id
@@ -23,7 +24,7 @@ use Illuminate\Notifications\Notifiable;
  */
 class User extends Auth
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
 
     protected $fillable = [
         'first_name',

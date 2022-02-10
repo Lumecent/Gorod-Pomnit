@@ -63,6 +63,7 @@ class HttpKernel extends AbstractHttpKernel
         'api' => [
             'throttle:api',
             SubstituteBindings::class,
+            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
         ],
     ];
 
