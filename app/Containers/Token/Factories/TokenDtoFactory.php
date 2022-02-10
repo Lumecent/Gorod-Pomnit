@@ -2,12 +2,12 @@
 
 namespace App\Containers\Token\Factories;
 
-use App\Containers\Token\DTO\RegistrationTokenDto;
+use App\Containers\Token\DTO\ActivateAccountTokenDto;
 
 class TokenDtoFactory
 {
-    public static function getActivateAccountTokenDto(): RegistrationTokenDto
+    public static function getActivateAccountTokenDto(): ActivateAccountTokenDto
     {
-        return app( RegistrationTokenDto::class );
+        return app( ActivateAccountTokenDto::class );
     }
 }
