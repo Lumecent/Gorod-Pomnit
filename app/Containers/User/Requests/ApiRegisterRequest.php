@@ -14,9 +14,9 @@ class ApiRegisterRequest extends Request
     public function rules(): array
     {
         return [
-            'email' => 'required|string|email|unique:users,email',
-            'password' => 'required|string|min:6|max:64',
-            'password_confirm' => 'required|string|same:password'
+            'email' => [ 'required', 'string', 'email', 'unique:users,email' ],
+            'password' => [ 'required', 'string', 'min:6', 'max:64' ],
+            'password_confirm' => [ 'required', 'string', 'same:password' ]
         ];
     }
 
