@@ -7,7 +7,6 @@ use App\Abstractions\Repositories\Repository as BaseRepository;
 use App\Containers\User\Interfaces\UserRepositoryInterface;
 use App\Containers\User\Models\User as Model;
 use App\Abstractions\Models\Model as BaseModel;
-use Illuminate\Support\Facades\Hash;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
@@ -16,12 +15,17 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         return Model::class;
     }
 
+    public function findByEmail( string $email ): ?BaseModel
+    {
+        return $this->startConditions()->where( 'email', $email )->first();
+    }
+
     public function create( Dto $dto ): ?BaseModel
     {
         $user = $this->startConditions();
 
         $user->email = $dto->email;
-        $user->password = Hash::make( $dto->password );
+        $user->password = $dto->password;
 
         $user->save();
 
