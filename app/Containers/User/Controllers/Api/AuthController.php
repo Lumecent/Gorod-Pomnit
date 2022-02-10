@@ -8,6 +8,7 @@ use App\Containers\Token\Factories\TokenDtoFactory;
 use App\Containers\Token\Factories\TokenServiceFactory;
 use App\Containers\User\Factories\UserDtoFactory;
 use App\Containers\User\Factories\UserServiceFactory;
+use App\Containers\User\Requests\ApiLoginRequest;
 use App\Containers\User\Requests\ApiRegisterRequest;
 use Illuminate\Support\Facades\DB;
 use Throwable;
@@ -42,5 +43,16 @@ class AuthController extends ApiController
         DB::commit();
 
         return ApiResponse::sendData( 'На указанный e-mail было отправлено письмо для подтверждения регистрации' );
+    }
+
+    public function login( ApiLoginRequest $request ): ApiResponse
+    {
+        $dto = UserDtoFactory::getLoginDto()->fromArray( $request->all() );
+        $user = UserServiceFactory::getLoginService()->run( $dto );
+        if ( $user ) {
+            return ApiResponse::sendData( '', [ 'user' => $user ] );
+        }
+
+        return ApiResponse::sendData( '', [ 'email' => 'Неправильный e-mail адрес или пароль' ], 422 );
     }
 }
