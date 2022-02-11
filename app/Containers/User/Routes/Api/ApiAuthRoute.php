@@ -5,7 +5,6 @@ namespace App\Containers\User\Routes\Api;
 use App\Abstractions\Providers\RouteServiceProvider;
 use App\Abstractions\Routes\ApiRoute;
 use App\Containers\User\Controllers\Api\AuthController;
-use Illuminate\Http\Request;
 
 class ApiAuthRoute extends RouteServiceProvider
 {
