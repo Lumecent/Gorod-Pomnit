@@ -5,6 +5,7 @@ namespace App\Containers\User\Routes\Api;
 use App\Abstractions\Providers\RouteServiceProvider;
 use App\Abstractions\Routes\ApiRoute;
 use App\Containers\User\Controllers\Api\AuthController;
+use Illuminate\Http\Request;
 
 class ApiAuthRoute extends RouteServiceProvider
 {
@@ -13,6 +14,8 @@ class ApiAuthRoute extends RouteServiceProvider
         ApiRoute::controller( AuthController::class )->prefix( 'api/v1/auth' )->group( function () {
             ApiRoute::post( 'registration', 'registration' );
             ApiRoute::post( 'login', 'login' );
+
+            ApiRoute::middleware( 'auth:sanctum' )->post( 'logout', 'logout' );
         } );
     }
 }

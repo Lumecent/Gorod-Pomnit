@@ -3,6 +3,7 @@
 namespace App\Containers\User\Controllers\Api;
 
 use App\Abstractions\Controllers\ApiController;
+use App\Abstractions\Requests\Request;
 use App\Abstractions\Responses\ApiResponse;
 use App\Containers\ConfirmCode\Factories\ConfirmCodeDtoFactory;
 use App\Containers\ConfirmCode\Factories\ConfirmCodeServiceFactory;
@@ -26,7 +27,7 @@ class AuthController extends ApiController
             $user = UserServiceFactory::getRegistrationService()->run( $userDto );
 
             $confirmCodeDto = ConfirmCodeDtoFactory::getConfirmEmailCodeDto()->fromArray( [
-                'code' => '',
+                'code' => 0,
                 'action' => '',
                 'user_id' => $user->id
             ] );
@@ -62,5 +63,12 @@ class AuthController extends ApiController
         }
 
         return ApiResponse::sendData( '', [ 'email' => 'Неправильный e-mail адрес или пароль' ], 422 );
+    }
+
+    public function logout( Request $request ): ApiResponse
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return ApiResponse::sendData( 'Выход из аккаунта выполнен успешно' );
     }
 }
