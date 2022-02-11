@@ -2,7 +2,6 @@
 
 namespace App\Containers\User\Factories;
 
-use App\Containers\User\Services\ActivateAccountMessageService;
 use App\Containers\User\Services\Auth\AuthTokenService;
 use App\Containers\User\Services\Auth\LoginService;
 use App\Containers\User\Services\Auth\RegistrationService;
@@ -22,10 +21,5 @@ class UserServiceFactory
     public static function getAuthTokenService(): AuthTokenService
     {
         return app( AuthTokenService::class );
-    }
-
-    public static function getActivateAccountMessageService(): ActivateAccountMessageService
-    {
-        return app( ActivateAccountMessageService::class );
     }
 }
