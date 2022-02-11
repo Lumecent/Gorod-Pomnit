@@ -4,8 +4,10 @@ namespace App\Containers\User\Controllers\Api;
 
 use App\Abstractions\Controllers\ApiController;
 use App\Abstractions\Responses\ApiResponse;
-use App\Containers\Token\Factories\TokenDtoFactory;
-use App\Containers\Token\Factories\TokenServiceFactory;
+use App\Containers\ConfirmCode\Factories\ConfirmCodeDtoFactory;
+use App\Containers\ConfirmCode\Factories\ConfirmCodeServiceFactory;
+use App\Containers\Email\Factories\EmailDtoFactory;
+use App\Containers\Email\Factories\EmailServiceFactory;
 use App\Containers\User\Factories\UserDtoFactory;
 use App\Containers\User\Factories\UserServiceFactory;
 use App\Containers\User\Requests\ApiLoginRequest;
@@ -23,23 +25,23 @@ class AuthController extends ApiController
             $userDto = UserDtoFactory::getRegistrationDto()->fromRequest( $request );
             $user = UserServiceFactory::getRegistrationService()->run( $userDto );
 
-            $tokenDto = TokenDtoFactory::getActivateAccountTokenDto()->fromArray( [
-                'user_id' => $user->id,
-                'token' => '',
-                'action' => ''
+            $confirmCodeDto = ConfirmCodeDtoFactory::getConfirmEmailCodeDto()->fromArray( [
+                'code' => '',
+                'action' => '',
+                'user_id' => $user->id
             ] );
-            $token = TokenServiceFactory::getActivateAccountTokenService()->run( $tokenDto );
+            $code = ConfirmCodeServiceFactory::getConfirmCodeEmailService()->run( $confirmCodeDto );
 
-            $activateDto = UserDtoFactory::getActivateAccountDto()->fromArray( [
-                'email' => $user->email,
-                'token' => $token->token
+            $confirmMessageDto = EmailDtoFactory::getConfirmMessageDto()->fromArray( [
+                'confirmCode' => $code->code,
+                'email' => $user->email
             ] );
-            UserServiceFactory::getActivateAccountMessageService()->run( $activateDto );
+            EmailServiceFactory::getConfirmMessageService()->run( $confirmMessageDto );
 
             $accessToken = UserServiceFactory::getAuthTokenService()->run( $user );
-        } catch ( Throwable ) {
+        } catch ( Throwable $exception ) {
             DB::rollBack();
-            return ApiResponse::sendData( 'Произошла ошибка! Повторите попытку позднее', [], 500 );
+            return ApiResponse::sendData( 'Произошла ошибка! Повторите попытку позднее', [ $exception->getMessage() ], 500 );
         }
 
         DB::commit();
