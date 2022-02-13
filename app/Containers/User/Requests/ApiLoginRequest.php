@@ -4,6 +4,31 @@ namespace App\Containers\User\Requests;
 
 use App\Abstractions\Requests\Request;
 
+/**
+ * @OA\Schema(
+ *     type="object",
+ *     title="Авторизация",
+ *     description="Авторизация пользователя",
+ * )
+ *
+ * @OA\Property(
+ *     property="email",
+ *     type="string",
+ *     title="email",
+ *     description="E-mail адрес",
+ *     example="demo@email.com",
+ * )
+ *
+ * @OA\Property(
+ *     property="password",
+ *     type="string",
+ *     title="password",
+ *     minLength=6,
+ *     maxLength=64,
+ *     description="Пароль",
+ *     example="password",
+ * )
+ */
 class ApiLoginRequest extends Request
 {
     public function authorize(): bool

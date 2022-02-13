@@ -18,6 +18,55 @@ use Throwable;
 
 class AuthController extends ApiController
 {
+    /**
+     * @OA\Post(
+     *     path="/auth/registration",
+     *     operationId="registration",
+     *     tags={"User"},
+     *     summary="Регистрация нового пользователя",
+     *     @OA\Response(
+     *         response="200",
+     *         description="Регистрация прошла успешно",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="user",
+     *                 type="object",
+     *                 ref="#/components/schemas/User"
+     *             ),
+     *             @OA\Property(
+     *                 property="access_token",
+     *                 type="string",
+     *                 description="Токен активной сессии пользователя",
+     *                 example="$42$23RvsdrR3sdf4",
+     *             ),
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 description="Сообщение после регистрации",
+     *                 example="На указанный e-mail адрес было отправлено письмо для подтверждения",
+     *             ),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="422",
+     *         description="Введены некорректные данные",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="errors",
+     *                 type="object",
+     *                 ref="#/components/schemas/ApiRegisterRequest"
+     *             ),
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/ApiRegisterRequest")
+     *     ),
+     * )
+     *
+     * @param ApiRegisterRequest $request
+     * @return ApiResponse
+     */
     public function registration( ApiRegisterRequest $request ): ApiResponse
     {
         DB::beginTransaction();
@@ -53,6 +102,49 @@ class AuthController extends ApiController
         );
     }
 
+    /**
+     * @OA\Post(
+     *     path="/auth/login",
+     *     operationId="login",
+     *     tags={"User"},
+     *     summary="Авторизация пользователя",
+     *     @OA\Response(
+     *         response="200",
+     *         description="Авторизация прошла успешно",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="user",
+     *                 type="object",
+     *                 ref="#/components/schemas/User"
+     *             ),
+     *             @OA\Property(
+     *                 property="access_token",
+     *                 type="string",
+     *                 description="Токен активной сессии пользователя",
+     *                 example="$42$23RvsdrR3sdf4",
+     *             ),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="422",
+     *         description="Введены некорректные данные",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 property="errors",
+     *                 type="object",
+     *                 ref="#/components/schemas/ApiLoginRequest"
+     *             )
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/ApiLoginRequest")
+     *     ),
+     * )
+     *
+     * @param ApiLoginRequest $request
+     * @return ApiResponse
+     */
     public function login( ApiLoginRequest $request ): ApiResponse
     {
         $dto = UserDtoFactory::getLoginDto()->fromArray( $request->all() );
@@ -65,6 +157,35 @@ class AuthController extends ApiController
         return ApiResponse::sendData( '', [ 'email' => 'Неправильный e-mail адрес или пароль' ], 422 );
     }
 
+    /**
+     * @OA\Post(
+     *     path="/auth/logout",
+     *     operationId="logout",
+     *     tags={"User"},
+     *     summary="Выход из аккаунта",
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Parameter(
+     *        name="Authorization",
+     *        in="header",
+     *        required=true,
+     *        description="Bearer {access-token}",
+     *        @OA\Schema(
+     *             type="bearerAuth"
+     *        )
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Выход прошел успешно",
+     *     ),
+     *     @OA\Response(
+     *         response="401",
+     *         description="Доступ запрещен",
+     *     ),
+     * )
+     *
+     * @param ApiLoginRequest $request
+     * @return ApiResponse
+     */
     public function logout( Request $request ): ApiResponse
     {
         $request->user()->currentAccessToken()->delete();

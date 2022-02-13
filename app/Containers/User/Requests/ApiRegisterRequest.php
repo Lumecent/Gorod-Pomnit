@@ -4,6 +4,39 @@ namespace App\Containers\User\Requests;
 
 use App\Abstractions\Requests\Request;
 
+/**
+ * @OA\Schema(
+ *     type="object",
+ *     title="Регистрация",
+ *     description="Регистрация нового пользователя",
+ * )
+ *
+ * @OA\Property(
+ *     property="email",
+ *     type="string",
+ *     title="email",
+ *     description="E-mail адрес",
+ *     example="demo@email.com",
+ * )
+ *
+ * @OA\Property(
+ *     property="password",
+ *     type="string",
+ *     title="password",
+ *     minLength=6,
+ *     maxLength=64,
+ *     description="Пароль",
+ *     example="password",
+ * )
+ *
+ * @OA\Property(
+ *     property="password_confirm",
+ *     type="string",
+ *     title="password_confirm",
+ *     description="Пароль",
+ *     example="password",
+ * )
+ */
 class ApiRegisterRequest extends Request
 {
     public function authorize(): bool
