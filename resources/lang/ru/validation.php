@@ -67,10 +67,14 @@ return [
         'string' => 'The :attribute must be greater than or equal :value characters.',
         'array' => 'The :attribute must have :value items or more.',
     ],
-    'image' => 'The :attribute must be an image.',
+
+    'image' => ':attribute должен быть изображением.',
+
     'in' => 'The selected :attribute is invalid.',
     'in_array' => 'The :attribute field does not exist in :other.',
-    'integer' => 'The :attribute must be an integer.',
+
+    'integer' => ':attribute должен быть целым числом.',
+
     'ip' => 'The :attribute must be a valid IP address.',
     'ipv4' => 'The :attribute must be a valid IPv4 address.',
     'ipv6' => 'The :attribute must be a valid IPv6 address.',
@@ -89,13 +93,15 @@ return [
     ],
     'max' => [
         'numeric' => 'The :attribute may not be greater than :max.',
-        'file' => 'The :attribute may not be greater than :max kilobytes.',
 
+        'file' => ':attribute может иметь размер не более :max килобайт.',
         'string' => ':attribute может содержать не более :max символов.',
 
         'array' => 'The :attribute may not have more than :max items.',
     ],
-    'mimes' => 'The :attribute must be a file of type: :values.',
+
+    'mimes' => ':attribute может иметь расширение файла: :values.',
+
     'mimetypes' => 'The :attribute must be a file of type: :values.',
     'min' => [
         'numeric' => 'The :attribute must be at least :min.',
@@ -176,6 +182,10 @@ return [
         'email'                             => 'E-mail адрес',
         'password'                          => 'Пароль',
         'password_confirm'                  => 'Подтверждение пароля',
+        'avatar'                            => 'Аватар',
+        'country'                           => 'Страна',
+        'city'                              => 'Город',
+        'code'                              => 'Код подтверждения',
     ],
 
 ];
