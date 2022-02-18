@@ -61,7 +61,7 @@ class UserController extends ApiController
     }
 
     /**
-     * @OA\Post(
+     * @OA\Put(
      *     path="/user/{id}/profile",
      *     operationId="updateProfile",
      *     tags={"User"},
@@ -116,8 +116,16 @@ class UserController extends ApiController
      */
     public function update( ProfileRequest $request, int $id ): ApiResponse
     {
-        $profileDto = UserDtoFactory::getProfileDto()->fromArray( array_merge( [ 'id' => $id ], $request->all() ) );
-        $user = $this->repository->update( $profileDto );
+        $avatarDto = UserDtoFactory::getLoadAvatarUserDto()->fromArray( array_merge( [ 'id' => $id ], $request->all() ) );
+        $avatar = UserServiceFactory::getLoadAvatarUserService()->run( $avatarDto );
+
+        $profileDto = UserDtoFactory::getProfileDto()->fromArray( array_merge( [ 'id' => $id, 'avatar' => $avatar ], $request->except( [ 'avatar' ] ) ) );
+        $user = $this->repository->update( $profileDto, $profileDto->id );
+
+        if ( $user ) {
+            return ApiResponse::sendData( 'Профиль обновлен', [ 'user' => $user ] );
+        }
+        return ApiResponse::sendData( 'Пользователь не найден!', [], 422 );
     }
 
     /**

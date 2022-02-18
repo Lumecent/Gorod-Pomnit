@@ -5,6 +5,7 @@ namespace App\Containers\User\Factories;
 use App\Containers\User\Services\Auth\AuthTokenService;
 use App\Containers\User\Services\Auth\LoginService;
 use App\Containers\User\Services\Auth\RegistrationService;
+use App\Containers\User\Services\LoadAvatarUserService;
 use App\Containers\User\Services\VerifiedEmailService;
 
 class UserServiceFactory
@@ -27,5 +28,10 @@ class UserServiceFactory
     public static function getVerifiedEmailService(): VerifiedEmailService
     {
         return app( VerifiedEmailService::class );
+    }
+
+    public static function getLoadAvatarUserService(): LoadAvatarUserService
+    {
+        return app( LoadAvatarUserService::class );
     }
 }
