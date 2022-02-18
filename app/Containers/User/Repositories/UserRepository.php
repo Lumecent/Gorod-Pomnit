@@ -32,9 +32,9 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         return $user;
     }
 
-    public function updateById( Dto $dto ): ?BaseModel
+    public function update( Dto $dto, string $id ): ?BaseModel
     {
-        if ( $user = $this->findById( $dto->id ) ) {
+        if ( $user = $this->findById( $id ) ) {
             $user->first_name = $dto->first_name;
             $user->last_name = $dto->last_name;
             $user->country = $dto->country;
