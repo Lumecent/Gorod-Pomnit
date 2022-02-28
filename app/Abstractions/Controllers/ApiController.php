@@ -18,7 +18,7 @@ namespace App\Abstractions\Controllers;
  *
  * @OA\Server(
  *     description="Город помнит Swagger API server",
- *     url="http://localhost:8885/api/v1"
+ *     url="http://164.92.203.21:8885/api/v1"
  * )
  *
  * @OA\SecurityScheme(
